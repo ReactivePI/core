@@ -1,4 +1,4 @@
-package nl.fizzylogic.reactivepi.i2c;
+package nl.fizzylogic.reactivepi;
 
 public class Convert {
     public static int wordToInt16(byte[] data) {

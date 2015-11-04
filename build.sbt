@@ -15,11 +15,8 @@ licenses += ("Apache-2.0", url("http://opensource.org/licenses/Apache-2.0"))
 bintrayPackageLabels := Seq("Scala", "IoT", "Raspberry PI")
 
 val nativeClasses = List(
-  "nl.fizzylogic.reactivepi.i2c.I2CDevice"
-)
-
-val nativeDeviceSources = List(
-  "src/jni/nl_fizzylogic_reactivepi_i2c_I2CDevice.c"
+  "nl.fizzylogic.reactivepi.i2c.I2CDevice",
+  "nl.fizzylogic.reactivepi.spi.SPIDevice"
 )
 
 val nativeGenerateHeaders = taskKey[Int]("Generates JNI headers for the library")
