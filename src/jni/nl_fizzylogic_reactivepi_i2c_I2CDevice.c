@@ -17,6 +17,8 @@ JNIEXPORT jint JNICALL Java_nl_fizzylogic_reactivepi_i2c_I2CDevice_initializeDev
     int length = (*env)->GetStringLength(env, path);
     (*env)->GetStringUTFRegion(env,path,0,length, filename);
 
+    // Open the device and return the device handle.
+    // If this device handle is negative, it means that the device failed to initialize.
     return open(filename, O_RDWR);
 }
 
@@ -33,18 +35,22 @@ JNIEXPORT jint JNICALL Java_nl_fizzylogic_reactivepi_i2c_I2CDevice_deviceWriteDi
     int response;
     unsigned char buffer[length];
 
+    // Tell the I2C bus that we want to talk to a specific device
+    // located on the specified address.
     response = ioctl(handle,I2C_SLAVE,deviceAddress);
 
     if(response < 0) {
         return response;
     }
-
+    
     jbyte *body = (*env)->GetByteArrayElements(env,data,0);
-
+    
     for(i = 0; i < length; i++) {
         buffer[i] = body[i+offset];
     }
 
+    // Release memory in the JVM to enable the GC to collect it.
+    // Not doing this results in a memory leak!
     (*env)->releaseByteArrayElements(env, data, body, 0);
 
     return write(handle,buffer,length);
@@ -57,6 +63,8 @@ JNIEXPORT jint JNICALL Java_nl_fizzylogic_reactivepi_i2c_I2CDevice_deviceWrite
     int response;
     unsigned char buffer[length + 1];
 
+    // Tell the I2C bus that we want to talk to a specific device
+    // located on the specified address.
     response = ioctl(handle, I2C_SLAVE, deviceAddress);
 
     if(response < 0) {
@@ -71,6 +79,8 @@ JNIEXPORT jint JNICALL Java_nl_fizzylogic_reactivepi_i2c_I2CDevice_deviceWrite
         buffer[i + 1] = body[i+offset];
     }
 
+    // Release memory in the JVM to enable the GC to collect it.
+    // Not doing this results in a memory leak!
     (*env)->releaseByteArrayElements(env, data, body, 0);
 
     return write(handle,buffer,length+1);
@@ -101,6 +111,8 @@ JNIEXPORT jint JNICALL Java_nl_fizzylogic_reactivepi_i2c_I2CDevice_deviceReadDir
         body[i + offset] = buffer[i];
     }
 
+    // Release memory in the JVM to enable the GC to collect it.
+    // Not doing this results in a memory leak!
     (*env)->ReleaseByteArrayElements(env, data, body, 0);
 
     return response;
