@@ -1,10 +1,12 @@
+import scala.sys.process._
+
 name := "core"
 
 organization := "reactivepi"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.12.6"
 
-version := "0.1"
+version := "0.2"
 
 bintrayOrganization := Some("reactivepi")
 
@@ -25,5 +27,5 @@ val nativeDeviceSources = List(
 val nativeGenerateHeaders = taskKey[Int]("Generates JNI headers for the library")
 
 nativeGenerateHeaders := {
-  ("javah -classpath target/scala-2.11/classes -d src/jni " + nativeClasses.mkString(" ")) !
+  ("javah -classpath target/scala-2.12/classes -d src/jni " + nativeClasses.mkString(" ")) !
 }
