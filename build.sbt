@@ -27,5 +27,5 @@ val nativeDeviceSources = List(
 val nativeGenerateHeaders = taskKey[Int]("Generates JNI headers for the library")
 
 nativeGenerateHeaders := {
-  ("javah -classpath target/scala-2.11/classes -d src/jni " + nativeClasses.mkString(" ")) !
+  ("javah -classpath target/scala-2.12/classes -d src/jni " + nativeClasses.mkString(" ")) !
 }
