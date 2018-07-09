@@ -2,11 +2,11 @@ import scala.sys.process._
 
 name := "core"
 
-organization := "reactivepi"
+organization := "nl.fizzylogic.reactivepi"
 
 scalaVersion := "2.12.6"
 
-version := "0.2"
+version := "0.3.1"
 
 bintrayOrganization := Some("reactivepi")
 
